@@ -3,64 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎾 Tennis Tracker</title>
+  <title>Tennis Tracker · Tec de Monterrey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     /* =============================================
        VARIABLES & RESET
     ============================================= */
     :root {
-      --bg: #0d0d0f;
-      --surface: #18181c;
-      --surface2: #22222a;
-      --border: #2e2e38;
-      --accent: #c8f250;
-      --accent-dim: #8aaa30;
-      --text: #e8e8ec;
-      --text-muted: #7a7a8a;
-      --danger: #e05555;
-      --danger-dim: #a03535;
-      --closed: #2a3520;
-      --closed-border: #4a6030;
-      --radius: 12px;
+      /* Tec de Monterrey institutional palette */
+      --tec-blue:       #003DA5;
+      --tec-blue-dark:  #002B7A;
+      --tec-blue-light: #1A5CC8;
+      --tec-blue-faint: #E8F0FF;
+      --tec-red:        #C8102E;
+      --tec-red-faint:  #FDEAEA;
+
+      /* Backgrounds */
+      --bg:       #F2F5FA;
+      --surface:  #FFFFFF;
+      --surface2: #F7F9FC;
+
+      /* Borders */
+      --border:       #D9DFEb;
+      --border-focus: var(--tec-blue);
+
+      /* Text */
+      --text:       #0F1C3F;
+      --text-muted: #64718C;
+
+      /* Accent mapped to Tec blue */
+      --accent:     var(--tec-blue);
+      --accent-dim: var(--tec-blue-light);
+
+      /* Danger */
+      --danger:     var(--tec-red);
+      --danger-dim: #A00C24;
+
+      /* Closed set */
+      --closed:        #F0FAF4;
+      --closed-border: #A3CFBB;
+      --closed-text:   #1B6B40;
+
+      /* Spacing */
+      --radius:    14px;
       --radius-sm: 8px;
-      --transition: 0.2s ease;
+      --transition: 0.18s ease;
+
+      /* Shadows */
+      --shadow-sm:  0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md:  0 4px 12px rgba(0,61,165,0.10), 0 2px 4px rgba(0,0,0,0.06);
+      --shadow-lg:  0 8px 24px rgba(0,61,165,0.13), 0 2px 6px rgba(0,0,0,0.07);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Courier New', 'Lucida Console', monospace;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       min-height: 100vh;
       padding: 0 0 80px;
-      line-height: 1.5;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* =============================================
        HEADER
     ============================================= */
     header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 20px 14px;
+      background: linear-gradient(135deg, var(--tec-blue-dark) 0%, var(--tec-blue) 60%, var(--tec-blue-light) 100%);
+      padding: 0 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 100;
+      min-height: 64px;
+      box-shadow: 0 2px 12px rgba(0,43,122,0.25);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
     }
 
     .header-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--accent);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title-main {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
       text-transform: uppercase;
     }
 
-    .header-title span { color: var(--text-muted); font-weight: 400; }
+    .header-title-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.10em;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
 
     /* =============================================
        BUTTONS
@@ -71,70 +136,133 @@
       border-radius: var(--radius-sm);
       font-family: inherit;
       font-weight: 600;
-      transition: background var(--transition), opacity var(--transition), transform 0.1s;
+      transition: background var(--transition), box-shadow var(--transition),
+                  border-color var(--transition), color var(--transition), transform 0.1s;
       touch-action: manipulation;
+      letter-spacing: 0.01em;
     }
 
-    button:active { transform: scale(0.96); }
+    button:active { transform: scale(0.97); }
 
     .btn-primary {
-      background: var(--accent);
-      color: #0d0d0f;
-      padding: 12px 20px;
-      font-size: 0.88rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      background: var(--tec-blue);
+      color: #FFFFFF;
+      padding: 11px 20px;
+      font-size: 0.875rem;
+      box-shadow: 0 2px 8px rgba(0,61,165,0.30);
     }
 
-    .btn-primary:hover { background: #d8ff60; }
+    .btn-primary:hover {
+      background: var(--tec-blue-dark);
+      box-shadow: 0 4px 14px rgba(0,61,165,0.38);
+    }
+
+    .btn-header {
+      background: rgba(255,255,255,0.12);
+      color: #FFFFFF;
+      border: 1.5px solid rgba(255,255,255,0.30);
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-header:hover {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.50);
+    }
 
     .btn-danger {
       background: transparent;
       color: var(--danger);
-      border: 1px solid var(--danger-dim);
+      border: 1.5px solid rgba(200,16,46,0.35);
       padding: 10px 16px;
       font-size: 0.82rem;
     }
 
-    .btn-danger:hover { background: var(--danger-dim); color: #fff; }
+    .btn-danger:hover {
+      background: var(--tec-red-faint);
+      border-color: var(--danger);
+    }
 
     .btn-ghost {
       background: transparent;
       color: var(--text-muted);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       padding: 10px 16px;
       font-size: 0.82rem;
     }
 
-    .btn-ghost:hover { color: var(--text); border-color: var(--text-muted); }
+    .btn-ghost:hover {
+      color: var(--tec-blue);
+      border-color: var(--tec-blue);
+      background: var(--tec-blue-faint);
+    }
+
+    .btn-close-set {
+      background: transparent;
+      color: var(--tec-blue);
+      border: 1.5px solid rgba(0,61,165,0.30);
+      padding: 10px 16px;
+      font-size: 0.82rem;
+      width: 100%;
+    }
+
+    .btn-close-set:hover {
+      background: var(--tec-blue-faint);
+      border-color: var(--tec-blue);
+    }
 
     .btn-icon {
       background: transparent;
       color: var(--text-muted);
-      padding: 6px 10px;
-      font-size: 0.85rem;
+      padding: 5px 9px;
+      font-size: 0.8rem;
       border-radius: 6px;
+      border: 1px solid transparent;
     }
 
-    .btn-icon:hover { color: var(--danger); }
+    .btn-icon:hover {
+      color: var(--danger);
+      background: var(--tec-red-faint);
+      border-color: rgba(200,16,46,0.20);
+    }
 
     /* =============================================
        SECTIONS
     ============================================= */
     .section {
-      padding: 20px 16px 0;
+      padding: 24px 16px 0;
       max-width: 680px;
       margin: 0 auto;
     }
 
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--tec-blue-faint);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
     .section-title {
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      flex: 1;
     }
 
     /* =============================================
@@ -150,12 +278,19 @@
     .player-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 8px 10px;
-      animation: fadeSlideIn 0.25s ease;
+      padding: 9px 12px;
+      animation: fadeSlideIn 0.22s ease;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .player-row:hover {
+      border-color: rgba(0,61,165,0.25);
+      box-shadow: var(--shadow-md);
     }
 
     @keyframes fadeSlideIn {
@@ -164,10 +299,15 @@
     }
 
     .player-num {
-      color: var(--accent);
-      font-size: 0.75rem;
+      color: var(--tec-blue);
+      font-size: 0.7rem;
       font-weight: 700;
-      min-width: 20px;
+      min-width: 22px;
+      background: var(--tec-blue-faint);
+      border-radius: 5px;
+      padding: 2px 5px;
+      text-align: center;
+      letter-spacing: 0.03em;
     }
 
     .player-name-input {
@@ -177,203 +317,15 @@
       outline: none;
       color: var(--text);
       font-family: inherit;
-      font-size: 0.95rem;
-      padding: 4px 0;
+      font-size: 0.93rem;
+      font-weight: 500;
+      padding: 3px 0;
     }
+
+    .player-name-input::placeholder { color: var(--text-muted); }
 
     .player-name-input:focus {
-      border-bottom: 1px solid var(--accent);
-    }
-
-    /* =============================================
-       SETS SECTION
-    ============================================= */
-    #sets-container {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .set-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      animation: fadeSlideIn 0.3s ease;
-    }
-
-    .set-card.closed {
-      background: var(--closed);
-      border-color: var(--closed-border);
-      opacity: 0.85;
-    }
-
-    .set-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface2);
-    }
-
-    .set-card.closed .set-header {
-      background: #1e2a14;
-      border-color: var(--closed-border);
-    }
-
-    .set-title {
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .set-card.closed .set-title { color: var(--accent-dim); }
-
-    .set-badge-closed {
-      font-size: 0.65rem;
-      background: var(--accent-dim);
-      color: #0d0d0f;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .set-body {
-      padding: 10px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .set-player-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 6px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .set-player-row:last-child { border-bottom: none; }
-
-    .set-player-name {
-      flex: 1;
-      font-size: 0.9rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .score-input {
-      width: 64px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 1rem;
-      font-weight: 700;
-      text-align: center;
-      padding: 7px 6px;
-      outline: none;
-      -moz-appearance: textfield;
-    }
-
-    .score-input::-webkit-outer-spin-button,
-    .score-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-    .score-input:focus { border-color: var(--accent); }
-    .score-input:disabled { opacity: 0.6; cursor: not-allowed; background: transparent; }
-
-    .set-footer {
-      padding: 10px 14px;
-      border-top: 1px solid var(--border);
-    }
-
-    /* =============================================
-       RANKING / SUMMARY TABLE
-    ============================================= */
-    #ranking-section {
-      padding: 20px 16px 0;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .ranking-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
-    .ranking-table thead tr {
-      border-bottom: 2px solid var(--accent);
-    }
-
-    .ranking-table th {
-      padding: 8px 10px;
-      text-align: left;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .ranking-table th:last-child,
-    .ranking-table td:last-child { text-align: right; }
-
-    .ranking-table td {
-      padding: 10px 10px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: middle;
-    }
-
-    .rank-pos {
-      font-weight: 700;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      min-width: 28px;
-    }
-
-    .rank-pos.gold   { color: #f5c518; }
-    .rank-pos.silver { color: #a0a0b0; }
-    .rank-pos.bronze { color: #b87040; }
-
-    .rank-pts {
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--accent);
-    }
-
-    .rank-sets {
-      color: var(--text-muted);
-      font-size: 0.82rem;
-    }
-
-    .ranking-table tbody tr {
-      transition: background var(--transition);
-    }
-
-    .ranking-table tbody tr.rank-updated {
-      animation: rankPulse 0.4s ease;
-    }
-
-    @keyframes rankPulse {
-      0%   { background: transparent; }
-      40%  { background: rgba(200, 242, 80, 0.1); }
-      100% { background: transparent; }
-    }
-
-    .no-data {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      padding: 20px 0;
-      text-align: center;
+      border-bottom: 2px solid var(--tec-blue);
     }
 
     /* =============================================
@@ -388,41 +340,316 @@
     .add-player-input {
       flex: 1;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
       font-family: inherit;
       font-size: 0.9rem;
       padding: 10px 14px;
       outline: none;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--transition), box-shadow var(--transition);
     }
 
-    .add-player-input:focus { border-color: var(--accent); }
+    .add-player-input::placeholder { color: var(--text-muted); }
+    .add-player-input:focus {
+      border-color: var(--tec-blue);
+      box-shadow: 0 0 0 3px rgba(0,61,165,0.10);
+    }
 
     /* =============================================
-       BOTTOM BAR (actions)
+       SETS SECTION
     ============================================= */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 12px 16px;
+    #sets-container {
       display: flex;
-      gap: 10px;
-      justify-content: center;
-      z-index: 100;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 14px;
     }
 
-    .bottom-bar button { flex: 1; max-width: 300px; }
+    .set-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      animation: fadeSlideIn 0.28s ease;
+      box-shadow: var(--shadow-md);
+      transition: box-shadow var(--transition);
+    }
+
+    .set-card:hover { box-shadow: var(--shadow-lg); }
+
+    .set-card.closed {
+      background: var(--closed);
+      border-color: var(--closed-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .set-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .set-card.closed .set-header {
+      background: #E4F4EC;
+      border-color: var(--closed-border);
+    }
+
+    .set-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .set-number-badge {
+      width: 26px;
+      height: 26px;
+      background: var(--tec-blue);
+      color: #fff;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .set-card.closed .set-number-badge {
+      background: var(--closed-text);
+    }
+
+    .set-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .set-badge-closed {
+      font-size: 0.64rem;
+      background: var(--closed-text);
+      color: #FFFFFF;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .set-body {
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .set-player-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .set-card.closed .set-player-row { border-color: var(--closed-border); }
+    .set-player-row:last-child { border-bottom: none; }
+
+    .set-player-name {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
+    }
+
+    .score-input {
+      width: 68px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 7px 6px;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      -moz-appearance: textfield;
+    }
+
+    .score-input::-webkit-outer-spin-button,
+    .score-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .score-input:focus {
+      border-color: var(--tec-blue);
+      box-shadow: 0 0 0 3px rgba(0,61,165,0.12);
+      background: var(--surface);
+    }
+
+    .score-input:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      background: transparent;
+      border-color: var(--closed-border);
+    }
+
+    .set-footer {
+      padding: 10px 16px 12px;
+      border-top: 1px solid var(--border);
+    }
 
     /* =============================================
-       MISC
+       RANKING / SUMMARY TABLE
     ============================================= */
-    .spacer { height: 20px; }
-    .mt-8 { margin-top: 8px; }
+    #ranking-section {
+      padding: 24px 16px 0;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .ranking-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .ranking-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .ranking-table thead {
+      background: linear-gradient(90deg, var(--tec-blue-dark), var(--tec-blue));
+    }
+
+    .ranking-table th {
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.67rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.80);
+      font-weight: 700;
+    }
+
+    .ranking-table th:last-child,
+    .ranking-table td:last-child { text-align: right; }
+
+    .ranking-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .ranking-table tbody tr:last-child td { border-bottom: none; }
+
+    .ranking-table tbody tr:nth-child(even) { background: var(--surface2); }
+
+    .rank-pos {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      min-width: 28px;
+      display: inline-block;
+    }
+
+    .rank-pos.gold   { color: #C9860A; }
+    .rank-pos.silver { color: #737380; }
+    .rank-pos.bronze { color: #A05B2A; }
+
+    .rank-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    .rank-pts {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--tec-blue);
+    }
+
+    .rank-sets {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .ranking-table tbody tr {
+      transition: background var(--transition);
+    }
+
+    .ranking-table tbody tr.rank-updated {
+      animation: rankPulse 0.45s ease;
+    }
+
+    @keyframes rankPulse {
+      0%   { background: transparent; }
+      40%  { background: rgba(0,61,165,0.07); }
+      100% { background: transparent; }
+    }
+
+    .no-data {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 28px 0;
+      text-align: center;
+    }
+
+    /* =============================================
+       DIVIDER / SPACER
+    ============================================= */
+    .spacer { height: 8px; }
+
+    /* =============================================
+       EMPTY STATE ILLUSTRATION
+    ============================================= */
+    .empty-state {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      opacity: 0.5;
+    }
+
+    .empty-state p {
+      font-size: 0.87rem;
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    /* =============================================
+       FOOTER WATERMARK
+    ============================================= */
+    .tec-footer {
+      text-align: center;
+      padding: 20px 16px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    /* =============================================
+       MISC UTILITIES
+    ============================================= */
+    .mt-8  { margin-top: 8px; }
     .mt-16 { margin-top: 16px; }
   </style>
 </head>
@@ -430,16 +657,26 @@
 
   <!-- =================== HEADER =================== -->
   <header>
-    <div class="header-title">🎾 Tennis <span>Tracker</span></div>
-    <button class="btn-danger" onclick="resetDay()" style="padding:8px 12px;font-size:0.75rem;">↺ Reiniciar día</button>
+    <div class="header-brand">
+      <div class="header-logo">🎾</div>
+      <div class="header-title">
+        <span class="header-title-main">Tennis Tracker</span>
+        <span class="header-title-sub">Tec de Monterrey</span>
+      </div>
+    </div>
+    <button class="btn-header" onclick="resetDay()">↺ Reiniciar día</button>
   </header>
 
   <!-- =================== PLAYERS =================== -->
   <div class="section" id="players-section">
-    <div class="section-title">Jugadores</div>
+    <div class="section-header">
+      <div class="section-icon">👥</div>
+      <span class="section-title">Jugadores</span>
+    </div>
     <div id="players-list"></div>
     <div class="add-player-row">
-      <input class="add-player-input" id="new-player-input" type="text" placeholder="Nombre del nuevo jugador…" maxlength="30" />
+      <input class="add-player-input" id="new-player-input" type="text"
+        placeholder="Nombre del nuevo jugador…" maxlength="30" />
       <button class="btn-primary" onclick="addPlayer()">+ Agregar</button>
     </div>
   </div>
@@ -448,7 +685,10 @@
 
   <!-- =================== SETS =================== -->
   <div class="section">
-    <div class="section-title">Sets del día</div>
+    <div class="section-header">
+      <div class="section-icon">🏆</div>
+      <span class="section-title">Sets del día</span>
+    </div>
     <div id="sets-container"></div>
     <button class="btn-primary" style="width:100%;margin-top:4px;" onclick="createSet()">+ Nuevo Set</button>
   </div>
@@ -457,14 +697,17 @@
 
   <!-- =================== RANKING =================== -->
   <div id="ranking-section">
-    <div class="section-title">Ranking del día</div>
-    <div id="ranking-container"></div>
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <span class="section-title">Ranking del día</span>
+    </div>
+    <div class="ranking-card">
+      <div id="ranking-container"></div>
+    </div>
   </div>
 
-  <div style="height:100px;"></div>
-
-  <!-- =================== BOTTOM BAR =================== -->
-  <!-- (empty — actions inline or sticky header) -->
+  <div class="tec-footer">© Tec de Monterrey · Tennis Tracker</div>
+  <div style="height:60px;"></div>
 
   <!-- =============================================
        JAVASCRIPT
@@ -553,7 +796,11 @@
       if (!name) {
         input.focus();
         input.style.borderColor = 'var(--danger)';
-        setTimeout(() => input.style.borderColor = '', 1200);
+        input.style.boxShadow = '0 0 0 3px rgba(200,16,46,0.12)';
+        setTimeout(() => {
+          input.style.borderColor = '';
+          input.style.boxShadow = '';
+        }, 1200);
         return;
       }
       const player = { id: uid(), name };
@@ -574,7 +821,6 @@
     function updatePlayerName(id, val) {
       const name = val.trim();
       if (!name) {
-        // restore old name visually
         renderPlayers();
         return;
       }
@@ -582,15 +828,14 @@
       if (p) {
         p.name = name;
         saveState();
-        renderRanking(); // update ranking names
-        renderSets();    // update set player names
+        renderRanking();
+        renderSets();
       }
     }
 
     function removePlayer(id) {
       if (!confirm('¿Eliminar este jugador? Sus puntos en sets cerrados se mantendrán en el historial.')) return;
       state.players = state.players.filter(p => p.id !== id);
-      // Remove from open sets
       state.sets.forEach(set => {
         if (!set.closed) delete set.scores[id];
       });
@@ -609,7 +854,6 @@
       saveState();
       renderSets();
       renderRanking();
-      // Scroll to new set
       setTimeout(() => {
         const el = document.getElementById('set-' + newSet.id);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -620,7 +864,11 @@
       const container = document.getElementById('sets-container');
       container.innerHTML = '';
       if (state.sets.length === 0) {
-        container.innerHTML = '<p class="no-data">No hay sets. Presiona "+ Nuevo Set" para comenzar.</p>';
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🎾</div>
+            <p>No hay sets todavía. Presiona "+ Nuevo Set" para comenzar.</p>
+          </div>`;
         return;
       }
       state.sets.forEach((set, idx) => {
@@ -628,8 +876,6 @@
         card.className = 'set-card' + (set.closed ? ' closed' : '');
         card.id = 'set-' + set.id;
 
-        // Determine all player IDs to show in this set
-        // Show current players + any player id that has a score in the set
         const allIds = new Set([...state.players.map(p => p.id), ...Object.keys(set.scores)]);
         const rows = [...allIds].map(pid => {
           const player = state.players.find(p => p.id === pid);
@@ -655,11 +901,14 @@
 
         const footer = set.closed
           ? ''
-          : `<div class="set-footer"><button class="btn-ghost" style="width:100%;color:var(--accent);border-color:var(--accent-dim);" onclick="closeSet('${set.id}')">✔ Cerrar Set ${idx + 1}</button></div>`;
+          : `<div class="set-footer"><button class="btn-close-set" onclick="closeSet('${set.id}')">✔ Cerrar Set ${idx + 1}</button></div>`;
 
         card.innerHTML = `
           <div class="set-header">
-            <span class="set-title">Set ${idx + 1}</span>
+            <div class="set-title-wrap">
+              <span class="set-number-badge">${idx + 1}</span>
+              <span class="set-title">Set ${idx + 1}</span>
+            </div>
             ${set.closed ? '<span class="set-badge-closed">Cerrado</span>' : ''}
           </div>
           <div class="set-body">${rows}</div>
@@ -671,13 +920,10 @@
 
     function updateScore(setId, playerId, input) {
       let val = parseInt(input.value, 10);
-
-      // Validate: no negative, no NaN
       if (isNaN(val) || val < 0) {
         val = 0;
         input.value = 0;
       }
-
       const set = state.sets.find(s => s.id === setId);
       if (set && !set.closed) {
         set.scores[playerId] = val;
@@ -699,15 +945,10 @@
        RANKING
     =================================================== */
     function computeRanking() {
-      // { playerId: { name, totalPts, setsPlayed } }
       const map = {};
-
-      // Init with all current players
       state.players.forEach(p => {
         map[p.id] = { name: p.name, totalPts: 0, setsPlayed: 0 };
       });
-
-      // Also include deleted players who appear in sets
       state.sets.forEach(set => {
         Object.entries(set.scores).forEach(([pid, pts]) => {
           if (!map[pid]) {
@@ -718,8 +959,6 @@
           if (pts > 0 || set.closed) map[pid].setsPlayed += 1;
         });
       });
-
-      // Sort: desc points, then alphabetical
       return Object.entries(map)
         .map(([id, data]) => ({ id, ...data }))
         .sort((a, b) => {
@@ -733,7 +972,11 @@
       const ranking = computeRanking();
 
       if (ranking.length === 0) {
-        container.innerHTML = '<p class="no-data">Agrega jugadores y sets para ver el ranking.</p>';
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📊</div>
+            <p>Agrega jugadores y sets para ver el ranking.</p>
+          </div>`;
         return;
       }
 
@@ -743,7 +986,7 @@
       const rows = ranking.map((p, i) => `
         <tr class="rank-row" data-id="${p.id}">
           <td><span class="rank-pos ${medalClass(i)}">${medalEmoji(i)}</span></td>
-          <td>${escHtml(p.name)}</td>
+          <td><span class="rank-name">${escHtml(p.name)}</span></td>
           <td><span class="rank-pts">${p.totalPts}</span></td>
           <td><span class="rank-sets">${p.setsPlayed}</span></td>
         </tr>
@@ -763,7 +1006,6 @@
         </table>
       `;
 
-      // Pulse animation on update
       container.querySelectorAll('tbody tr').forEach(tr => {
         tr.classList.add('rank-updated');
         setTimeout(() => tr.classList.remove('rank-updated'), 500);
