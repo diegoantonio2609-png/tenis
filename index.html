@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Tennis Tracker · IBERO León</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1251,6 +1251,17 @@
     </div>
   </div>
 
+  <!-- =================== SET WINS RANKING =================== -->
+  <div id="set-wins-section" style="margin-top:8px;padding:0 16px;max-width:680px;margin-left:auto;margin-right:auto;">
+    <div class="section-header">
+      <div class="section-icon"><i class="fa-solid fa-trophy"></i></div>
+      <span class="section-title">Ganador por Set</span>
+    </div>
+    <div class="ranking-card">
+      <div id="set-wins-container"></div>
+    </div>
+  </div>
+
   <div class="app-footer">
     © IBERO León <i class="fa-solid fa-circle"></i> Tennis Tracker
   </div>
@@ -1527,6 +1538,7 @@
             <div class="empty-state-title">Sin sets aún</div>
             <p>Toca "Agregar Set" para registrar el primer set del día.</p>
           </div>`;
+        renderSetWins();
         return;
       }
 
@@ -1596,6 +1608,7 @@
         `;
         container.appendChild(card);
       });
+      renderSetWins();
     }
 
     /**
@@ -1698,6 +1711,75 @@
     }
 
     /* ===================================================
+       SET WINS
+    =================================================== */
+    function computeSetWins() {
+      const map = {};
+      state.players.forEach(p => {
+        map[p.id] = { name: p.name, wins: 0 };
+      });
+      state.sets.filter(set => set.closed).forEach(set => {
+        const values = Object.values(set.scores);
+        if (values.length === 0) return;
+        const maxScore = Math.max(...values);
+        Object.entries(set.scores).forEach(([pid, pts]) => {
+          if (pts === maxScore) {
+            if (!map[pid]) {
+              const p = state.players.find(pl => pl.id === pid);
+              map[pid] = { name: p ? p.name : 'Jugador eliminado', wins: 0 };
+            }
+            map[pid].wins += 1;
+          }
+        });
+      });
+      return Object.entries(map)
+        .map(([id, data]) => ({ id, ...data }))
+        .sort((a, b) => {
+          if (b.wins !== a.wins) return b.wins - a.wins;
+          return a.name.localeCompare(b.name);
+        });
+    }
+
+    function renderSetWins() {
+      const container = document.getElementById('set-wins-container');
+      const ranking = computeSetWins();
+
+      if (ranking.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🏆</div>
+            <div class="empty-state-title">Sin sets cerrados</div>
+            <p>Cierra un set para ver quién gana más sets.</p>
+          </div>`;
+        return;
+      }
+
+      const medalClass = (i) => i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+      const medalEmoji = (i) => i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
+
+      const rows = ranking.map((p, i) => `
+        <tr class="rank-row" data-id="${p.id}">
+          <td><span class="rank-pos ${medalClass(i)}">${medalEmoji(i)}</span></td>
+          <td><span class="rank-name">${escHtml(p.name)}</span></td>
+          <td><span class="rank-pts">${p.wins}</span></td>
+        </tr>
+      `).join('');
+
+      container.innerHTML = `
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Sets Ganados</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    /* ===================================================
        RESET
     =================================================== */
     function resetDay() {
@@ -1714,6 +1796,7 @@
       renderPlayers();
       renderSets();
       renderRanking();
+      renderSetWins();
     }
 
     /* ===================================================
