@@ -10,69 +10,65 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     /* =============================================
-       DESIGN TOKENS — Premium Dark Mode
+       DESIGN TOKENS — Premium Light Mode
     ============================================= */
     :root {
-      /* Dark backgrounds */
-      --bg-primary:   #121212;
-      --bg-secondary: #1a1a1a;
-      --surface:      #252525;
-      --surface2:     #2d2d2d;
-      --surface3:     #333333;
+      /* Backgrounds */
+      --bg-primary:   #F7F8FC;
+      --bg-secondary: #FFFFFF;
+      --surface:      #FFFFFF;
+      --surface2:     #F0F2F8;
+      --surface3:     #E8EBF4;
 
-      /* IBERO Brand Red */
-      --ibero-red:       #BE0A29;
-      --ibero-red-dark:  #8C0720;
-      --ibero-red-light: #D42040;
-      --ibero-red-glow:  rgba(190,10,41,0.25);
-
-      /* Vibrant Accent Gradients (for charts & interactive) */
-      --accent-a: #39FF14;   /* neon green */
-      --accent-b: #00E5CC;   /* electric teal */
-      --accent-c: #FF6B00;   /* fire orange */
-      --accent-d: #FFD700;   /* gold */
-      --accent-grad: linear-gradient(135deg, #39FF14, #00E5CC);
-      --accent-grad-warn: linear-gradient(135deg, #FF6B00, #FFD700);
+      /* IBERO Brand */
+      --ibero-red:        #BE0A29;
+      --ibero-red-dark:   #8C0720;
+      --ibero-red-light:  #D42040;
+      --ibero-red-subtle: rgba(190,10,41,0.08);
+      --ibero-red-mid:    rgba(190,10,41,0.15);
 
       /* Text */
-      --text:       #F0F0F0;
-      --text-muted: #9A9A9A;
-      --text-light: #606060;
+      --text:        #1A1D2E;
+      --text-muted:  #6B7280;
+      --text-light:  #9CA3AF;
 
-      /* Borders */
-      --border:        rgba(255,255,255,0.08);
-      --border-accent: rgba(57,255,20,0.25);
+      /* Accents Light Mode */
+      --accent-a:    #BE0A29;
+      --accent-b:    #2563EB;
+      --accent-c:    #F59E0B;
+      --accent-grad: linear-gradient(135deg, #BE0A29, #D42040);
 
       /* Medals */
-      --gold:   #FFD700;
-      --silver: #C0C0C0;
+      --gold:   #F59E0B;
+      --silver: #9CA3AF;
       --bronze: #CD7F32;
 
-      /* Radii — exaggerated modern friendly */
-      --radius:    26px;
-      --radius-sm: 18px;
+      /* Borders */
+      --border:        rgba(0,0,0,0.08);
+      --border-accent: rgba(190,10,41,0.20);
+
+      /* Radii */
+      --radius:    24px;
+      --radius-sm: 16px;
       --radius-xs: 12px;
 
-      /* Shadows / Glows */
-      --shadow-card: 0 6px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05);
-      --shadow-red:  0 0 28px rgba(190,10,41,0.20), 0 6px 32px rgba(0,0,0,0.55);
-      --shadow-btn:  0 4px 18px rgba(190,10,41,0.45);
-      --glow-green:  0 0 22px rgba(57,255,20,0.18);
-      --glow-teal:   0 0 22px rgba(0,229,204,0.15);
+      /* Shadows — suaves, tipo app de paga */
+      --shadow-card: 0 2px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-red:  0 4px 20px rgba(190,10,41,0.18);
+      --shadow-btn:  0 4px 14px rgba(190,10,41,0.30);
+      --shadow-lg:   0 8px 32px rgba(0,0,0,0.10);
 
-      /* Transition */
-      --t: 0.20s ease;
+      --t: 0.18s ease;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     /* =============================================
-       BODY — Deep charcoal gradient + noise texture
+       BODY — Clean light background
     ============================================= */
     body {
-      background: linear-gradient(160deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-      background-attachment: fixed;
+      background: var(--bg-primary);
       color: var(--text);
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       min-height: 100vh;
@@ -82,30 +78,18 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Fine noise texture overlay for depth */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.035;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Ensure all main content renders above the noise layer */
+    /* Ensure all main content renders correctly */
     header, .hero-section, .section, #ranking-section,
     .app-footer, #player-select-modal { position: relative; z-index: 1; }
 
     /* =============================================
-       HEADER — Compact sticky dark bar
+       HEADER — Compact sticky light bar
     ============================================= */
     header {
-      background: rgba(18,18,18,0.92);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(190,10,41,0.30);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
       padding: 0 20px;
       display: flex;
       align-items: center;
@@ -114,17 +98,7 @@
       top: 0;
       z-index: 100;
       min-height: 66px;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.60);
-    }
-
-    /* Subtle left red accent stripe */
-    header::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, var(--ibero-red-light), var(--ibero-red-dark));
-      border-radius: 0 2px 2px 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
 
     .header-brand {
@@ -151,7 +125,7 @@
       font-size: 1.02rem;
       font-weight: 900;
       letter-spacing: 0.04em;
-      color: #FFFFFF;
+      color: var(--text);
       text-transform: uppercase;
     }
 
@@ -159,16 +133,16 @@
       display: block;
       font-size: 0.60rem;
       letter-spacing: 0.16em;
-      color: rgba(255,255,255,0.45);
+      color: var(--text-muted);
       text-transform: uppercase;
       font-weight: 600;
       margin-top: 2px;
     }
 
     .btn-header {
-      background: rgba(190,10,41,0.15);
-      color: var(--ibero-red-light);
-      border: 1.5px solid rgba(190,10,41,0.35);
+      background: var(--ibero-red-subtle);
+      color: var(--ibero-red);
+      border: 1.5px solid var(--border-accent);
       padding: 9px 15px;
       font-size: 0.76rem;
       letter-spacing: 0.04em;
@@ -184,61 +158,47 @@
     }
 
     .btn-header:hover {
-      background: rgba(190,10,41,0.28);
+      background: var(--ibero-red-mid);
       border-color: var(--ibero-red);
-      box-shadow: 0 0 16px rgba(190,10,41,0.25);
+      box-shadow: var(--shadow-red);
     }
 
     .btn-header:active { transform: scale(0.95); }
 
     /* =============================================
-       HERO — Blended sports image + quote
+       HERO — Premium light card with IBERO red
     ============================================= */
     .hero-section {
-      position: relative;
-      background: linear-gradient(175deg, #200010 0%, #0a0014 45%, #121212 100%);
-      overflow: hidden;
-      padding: 42px 20px 48px;
+      background: linear-gradient(135deg, #BE0A29 0%, #8C0720 100%);
+      border-radius: 0 0 32px 32px;
+      padding: 36px 24px 40px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Sports image blended via CSS mask-gradient */
+    /* Sports image overlay */
     .hero-section::before {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        url("https://elements-resized.envatousercontent.com/elements-cover-images/c7fe2265-3065-45e3-8943-468c315fb0c3?w=2038&cf_fit=scale-down&q=85&format=auto&s=9e4d9431ae98a206e05da3e1eb9617635b600fed35c6ab0a8c39ddbdf1f8003e");
+        url("https://elements-resized.envatousercontent.com/elements-cover-images/2db22101-7a8d-4fce-91d0-b96c303ccaae?w=2038&cf_fit=scale-down&q=85&format=auto&s=de8a2fc851d5ca701edae22791e52c20cd0350f4029e2dbded59c2fc67b212e3");
       background-size: cover;
-      background-position: center;
-      opacity: 0.07;
-      mix-blend-mode: luminosity;
-      filter: saturate(0) contrast(1.2);
+      background-position: center top;
+      opacity: 0.12;
+      mix-blend-mode: overlay;
+      pointer-events: none;
     }
 
-    /* Vignette fade edges */
+    /* Remove dark vignette — not needed on red hero */
     .hero-section::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at center, transparent 30%, rgba(18,18,18,0.80) 100%),
-        linear-gradient(to bottom, rgba(18,18,18,0.30) 0%, rgba(18,18,18,0.95) 100%);
-      pointer-events: none;
+      display: none;
     }
 
-    /* Diagonal stripe accent lines */
+    /* Diagonal stripes — hidden in light mode */
     .hero-stripes {
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -55deg,
-        transparent,
-        transparent 28px,
-        rgba(190,10,41,0.04) 28px,
-        rgba(190,10,41,0.04) 56px
-      );
-      pointer-events: none;
+      display: none;
     }
 
     .hero-content {
@@ -248,9 +208,9 @@
 
     .hero-badge {
       display: inline-block;
-      background: rgba(190,10,41,0.18);
-      border: 1px solid rgba(190,10,41,0.45);
-      color: var(--ibero-red-light);
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.30);
+      color: #FFFFFF;
       font-size: 0.60rem;
       font-weight: 800;
       letter-spacing: 0.22em;
@@ -268,23 +228,21 @@
       letter-spacing: 0.06em;
       line-height: 0.92;
       color: #FFFFFF;
-      text-shadow:
-        0 0 40px rgba(190,10,41,0.50),
-        0 0 80px rgba(190,10,41,0.20),
-        0 4px 30px rgba(0,0,0,0.80);
+      text-shadow: none;
       margin-bottom: 14px;
     }
 
     .hero-quote span {
-      background: linear-gradient(90deg, var(--ibero-red-light), #FF6060);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: rgba(255,255,255,0.85);
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+      background-clip: initial;
     }
 
     .hero-sub {
       font-size: 0.82rem;
-      color: rgba(255,255,255,0.38);
+      color: rgba(255,255,255,0.65);
       letter-spacing: 0.08em;
       font-weight: 500;
       text-transform: uppercase;
@@ -342,8 +300,8 @@
 
     .btn-ghost:hover {
       color: var(--text);
-      border-color: rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.05);
+      border-color: rgba(0,0,0,0.20);
+      background: rgba(0,0,0,0.03);
     }
 
     /* Icon-only */
@@ -359,16 +317,16 @@
     }
 
     .btn-icon:hover {
-      color: var(--ibero-red-light);
-      background: rgba(190,10,41,0.12);
-      border-color: rgba(190,10,41,0.25);
+      color: var(--ibero-red);
+      background: var(--ibero-red-subtle);
+      border-color: var(--border-accent);
     }
 
-    /* Close-set */
+    /* Close-set — IBERO red light mode */
     .btn-close-set {
-      background: rgba(57,255,20,0.07);
-      color: var(--accent-a);
-      border: 1.5px solid rgba(57,255,20,0.25);
+      background: var(--ibero-red-subtle);
+      color: var(--ibero-red);
+      border: 1.5px solid var(--border-accent);
       padding: 13px 18px;
       font-size: 0.85rem;
       width: 100%;
@@ -380,9 +338,9 @@
     }
 
     .btn-close-set:hover {
-      background: rgba(57,255,20,0.14);
-      border-color: var(--accent-a);
-      box-shadow: var(--glow-green);
+      background: var(--ibero-red-mid);
+      border-color: var(--ibero-red);
+      box-shadow: var(--shadow-red);
     }
 
     /* =============================================
@@ -392,8 +350,8 @@
       display: flex;
       align-items: center;
       gap: 0;
-      background: var(--surface3);
-      border: 1.5px solid rgba(255,255,255,0.08);
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
       border-radius: 50px;
       overflow: hidden;
       flex-shrink: 0;
@@ -415,17 +373,17 @@
     }
 
     .btn-stepper.btn-minus:hover {
-      background: rgba(190,10,41,0.18);
-      color: var(--ibero-red-light);
+      background: var(--surface3);
+      color: var(--text);
     }
 
     .btn-stepper.btn-plus {
-      color: var(--accent-a);
+      color: var(--ibero-red);
     }
 
     .btn-stepper.btn-plus:hover {
-      background: rgba(57,255,20,0.14);
-      color: var(--accent-a);
+      background: var(--ibero-red-subtle);
+      color: var(--ibero-red);
     }
 
     .btn-stepper:active { transform: scale(0.88); }
@@ -441,14 +399,14 @@
     }
 
     .score-stepper.disabled {
-      opacity: 0.50;
+      opacity: 0.60;
       pointer-events: none;
       background: transparent;
-      border-color: rgba(57,255,20,0.12);
+      border-color: var(--border);
     }
 
     .score-stepper.disabled .score-display {
-      color: var(--accent-b);
+      color: var(--ibero-red);
     }
 
     /* =============================================
@@ -474,7 +432,7 @@
 
     .ring-track {
       fill: none;
-      stroke: rgba(255,255,255,0.07);
+      stroke: rgba(0,0,0,0.08);
       stroke-width: 4;
     }
 
@@ -486,7 +444,6 @@
       stroke-dasharray: 138.23;
       stroke-dashoffset: 138.23;
       transition: stroke-dashoffset 0.40s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: drop-shadow(0 0 4px rgba(57,255,20,0.50));
     }
 
     .ring-label {
@@ -520,15 +477,15 @@
     .section-icon {
       width: 36px;
       height: 36px;
-      background: rgba(190,10,41,0.15);
-      border: 1px solid rgba(190,10,41,0.30);
+      background: var(--ibero-red-subtle);
+      border: 1px solid var(--border-accent);
       border-radius: var(--radius-xs);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
       flex-shrink: 0;
-      color: var(--ibero-red-light);
+      color: var(--ibero-red);
     }
 
     .section-title {
@@ -554,7 +511,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: var(--surface);
+      background: #FFFFFF;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       padding: 12px 15px;
@@ -564,7 +521,7 @@
     }
 
     .player-row:hover {
-      border-color: rgba(190,10,41,0.30);
+      border-color: var(--border-accent);
       box-shadow: var(--shadow-red);
     }
 
@@ -616,7 +573,7 @@
 
     .add-player-input {
       flex: 1;
-      background: var(--surface);
+      background: #FFFFFF;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
@@ -646,7 +603,7 @@
     }
 
     .set-card {
-      background: var(--surface);
+      background: #FFFFFF;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
@@ -656,13 +613,13 @@
     }
 
     .set-card:hover {
-      border-color: rgba(190,10,41,0.22);
+      border-color: var(--border-accent);
       box-shadow: var(--shadow-red);
     }
 
     .set-card.closed {
-      border-color: rgba(57,255,20,0.18);
-      box-shadow: var(--glow-green), var(--shadow-card);
+      border-color: rgba(190,10,41,0.20);
+      box-shadow: var(--shadow-card);
     }
 
     .set-header {
@@ -675,8 +632,8 @@
     }
 
     .set-card.closed .set-header {
-      background: rgba(57,255,20,0.04);
-      border-color: rgba(57,255,20,0.14);
+      background: var(--ibero-red-subtle);
+      border-color: var(--border-accent);
     }
 
     .set-title-wrap {
@@ -688,7 +645,7 @@
     .set-number-badge {
       width: 32px;
       height: 32px;
-      background: linear-gradient(135deg, var(--ibero-red) 0%, var(--ibero-red-dark) 100%);
+      background: var(--accent-grad);
       color: #fff;
       border-radius: 10px;
       display: flex;
@@ -697,12 +654,12 @@
       font-size: 0.74rem;
       font-weight: 900;
       letter-spacing: 0.02em;
-      box-shadow: 0 3px 10px rgba(190,10,41,0.40);
+      box-shadow: 0 3px 10px rgba(190,10,41,0.25);
     }
 
     .set-card.closed .set-number-badge {
-      background: rgba(57,255,20,0.15);
-      color: var(--accent-a);
+      background: var(--ibero-red-subtle);
+      color: var(--ibero-red);
       box-shadow: none;
     }
 
@@ -716,9 +673,9 @@
 
     .set-badge-closed {
       font-size: 0.60rem;
-      background: rgba(57,255,20,0.12);
-      color: var(--accent-a);
-      border: 1px solid rgba(57,255,20,0.28);
+      background: var(--ibero-red-subtle);
+      color: var(--ibero-red);
+      border: 1px solid var(--border-accent);
       padding: 4px 13px;
       border-radius: 20px;
       letter-spacing: 0.10em;
@@ -738,7 +695,7 @@
       justify-content: space-between;
       gap: 12px;
       padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .set-player-row:last-child { border-bottom: none; }
@@ -777,7 +734,7 @@
 
     .set-footer {
       padding: 12px 20px 16px;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(0,0,0,0.05);
     }
 
     /* =============================================
@@ -786,9 +743,9 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       display: flex;
       align-items: flex-end;
       justify-content: center;
@@ -807,15 +764,15 @@
     }
 
     .modal-box {
-      background: var(--surface2);
-      border: 1.5px solid rgba(255,255,255,0.10);
+      background: #FFFFFF;
+      border: 1px solid var(--border);
       border-radius: var(--radius) var(--radius) 0 0;
       width: 100%;
       max-width: 640px;
       max-height: 85vh;
       overflow-y: auto;
       animation: sheetUp 0.30s cubic-bezier(0.22, 1, 0.36, 1);
-      box-shadow: 0 -8px 60px rgba(0,0,0,0.70);
+      box-shadow: var(--shadow-lg);
     }
 
     @keyframes sheetUp {
@@ -826,7 +783,7 @@
     .modal-handle {
       width: 44px;
       height: 4px;
-      background: rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.12);
       border-radius: 10px;
       margin: 14px auto 0;
     }
@@ -861,7 +818,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      background: var(--surface);
+      background: #FFFFFF;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       padding: 13px 16px;
@@ -869,8 +826,8 @@
     }
 
     .modal-player-item:has(.player-select-toggle:checked) {
-      border-color: rgba(57,255,20,0.28);
-      box-shadow: 0 0 14px rgba(57,255,20,0.08);
+      border-color: var(--border-accent);
+      box-shadow: 0 0 0 3px rgba(190,10,41,0.08);
     }
 
     .modal-player-info {
@@ -926,7 +883,7 @@
       cursor: pointer;
       inset: 0;
       background: var(--surface3);
-      border: 1.5px solid rgba(255,255,255,0.10);
+      border: 1.5px solid var(--border);
       border-radius: 26px;
       transition: background 0.28s, border-color 0.28s, box-shadow 0.28s;
     }
@@ -945,9 +902,9 @@
     }
 
     .toggle input:checked + .toggle-slider {
-      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      background: linear-gradient(90deg, #BE0A29, #D42040);
       border-color: transparent;
-      box-shadow: 0 0 12px rgba(57,255,20,0.30);
+      box-shadow: 0 0 8px rgba(190,10,41,0.25);
     }
 
     .toggle input:checked + .toggle-slider::before {
@@ -984,7 +941,7 @@
     .modal-select-all {
       background: none;
       border: none;
-      color: var(--accent-b);
+      color: var(--ibero-red);
       font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
@@ -1004,7 +961,7 @@
     }
 
     .ranking-card {
-      background: var(--surface);
+      background: #FFFFFF;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
@@ -1018,7 +975,7 @@
     }
 
     .ranking-table thead {
-      background: linear-gradient(90deg, var(--ibero-red-dark), var(--ibero-red));
+      background: var(--accent-grad);
     }
 
     .ranking-table th {
@@ -1027,7 +984,7 @@
       font-size: 0.62rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
+      color: rgba(255,255,255,0.85);
       font-weight: 800;
     }
 
@@ -1036,14 +993,15 @@
 
     .ranking-table td {
       padding: 13px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
       vertical-align: middle;
+      color: var(--text);
     }
 
     .ranking-table tbody tr:last-child td { border-bottom: none; }
 
     .ranking-table tbody tr:nth-child(even) {
-      background: rgba(255,255,255,0.02);
+      background: rgba(0,0,0,0.02);
     }
 
     .rank-pos {
@@ -1054,7 +1012,7 @@
       display: inline-block;
     }
 
-    .rank-pos.gold   { color: var(--gold); text-shadow: 0 0 12px rgba(255,215,0,0.40); }
+    .rank-pos.gold   { color: var(--gold); text-shadow: 0 0 12px rgba(245,158,11,0.30); }
     .rank-pos.silver { color: var(--silver); }
     .rank-pos.bronze { color: var(--bronze); }
 
@@ -1067,7 +1025,7 @@
     .rank-pts {
       font-weight: 900;
       font-size: 1.05rem;
-      background: var(--accent-grad);
+      background: linear-gradient(135deg, #BE0A29, #D42040);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -1089,7 +1047,7 @@
 
     @keyframes rankPulse {
       0%   { background: transparent; }
-      40%  { background: rgba(57,255,20,0.05); }
+      40%  { background: rgba(190,10,41,0.06); }
       100% { background: transparent; }
     }
 
@@ -1195,8 +1153,8 @@
   <svg width="0" height="0" style="position:absolute;overflow:hidden;" aria-hidden="true">
     <defs>
       <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stop-color="#39FF14" />
-        <stop offset="100%" stop-color="#00E5CC" />
+        <stop offset="0%"   stop-color="#BE0A29" />
+        <stop offset="100%" stop-color="#D42040" />
       </linearGradient>
       <linearGradient id="scoreGradientWarm" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%"   stop-color="#FF6B00" />
@@ -1210,7 +1168,7 @@
     <div class="modal-box">
       <div class="modal-handle"></div>
       <div class="modal-header">
-        <h2 id="modal-title"><i class="fa-solid fa-users" style="color:var(--ibero-red-light);margin-right:8px;font-size:0.95rem;"></i>Seleccionar Jugadores</h2>
+        <h2 id="modal-title"><i class="fa-solid fa-users" style="color:var(--ibero-red);margin-right:8px;font-size:0.95rem;"></i>Seleccionar Jugadores</h2>
         <p>Activa los jugadores que participan en este set</p>
       </div>
       <div class="modal-select-bar">
@@ -1465,12 +1423,23 @@
       `).join('');
 
       const modal = document.getElementById('player-select-modal');
+
+      // FIX (Paso 1): registrar el listener del overlay solo una vez,
+      // evitando que se acumule en cada apertura del modal.
+      if (!modal._listenerRegistered) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === this) closePlayerModal();
+        });
+        modal._listenerRegistered = true;
+      }
+
       modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
     }
 
     function closePlayerModal() {
-      document.getElementById('player-select-modal').classList.add('hidden');
+      const modal = document.getElementById('player-select-modal');
+      modal.classList.add('hidden');
       document.body.style.overflow = '';
     }
 
@@ -1506,11 +1475,6 @@
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
-
-    // Close modal when clicking backdrop
-    document.getElementById('player-select-modal').addEventListener('click', function(e) {
-      if (e.target === this) closePlayerModal();
-    });
 
     /* ===================================================
        PROGRESS RING
