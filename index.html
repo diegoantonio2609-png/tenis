@@ -752,6 +752,7 @@
       z-index: 300;
       padding: 0;
       animation: overlayIn 0.22s ease;
+      touch-action: pan-y;
     }
 
     .modal-overlay.hidden {
@@ -1434,7 +1435,6 @@
       }
 
       modal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
     }
 
     function closePlayerModal() {
